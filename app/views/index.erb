@@ -1,0 +1,15 @@
+<div class="container">
+  <form action="/attributes" method="post">
+    <select name="distillery_names">
+      <% @distilleries.each do |distillery| %>
+        <option><%= distillery.name %></option>
+      <% end %>
+    </select>
+  </form>
+  <div class="logo">
+  </div>
+  <div class="chart">
+  </div>
+  <svg id="svg" class="chart">
+  </svg>
+</div>
