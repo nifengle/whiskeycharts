@@ -1,12 +1,22 @@
 <div class="container">
+  <h2>Choose a distillery to view a map of its flavor profile.</h2>
   <form action="/attributes" method="post">
-    <select name="distillery_names">
-      <% @distilleries.each do |distillery| %>
-        <option><%= distillery.name %></option>
-      <% end %>
-    </select>
+    <div id="choose_distillery">
+      <div id="main_select">
+        <select name="distillery_names">
+          <%= erb :distillery_list %>
+        </select>
+      </div>
+      <label>Compare against</label>
+      <div id="compare_select">
+        <select name="comparison_distillery">
+          <%= erb :distillery_list %>
+        </select>
+      </div>
+    </div>
   </form>
   <div class="logo">
+
   </div>
   <div class="chart">
   </div>

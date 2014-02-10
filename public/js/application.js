@@ -1,12 +1,12 @@
 $(document).ready(function(){  
   $('select').on("change", function(e){
     e.preventDefault();
-    var attr = $('select').val();
+    var attr = $('#choose_distillery').val();
 
     $.get( '/attributes/'+attr, {attribute: attr})
     .done(function(data) {
         $('.chart').children().remove()
-        chart(data);
+        generateRadarChart(data.distillery);
     });
   })
 })
@@ -22,7 +22,6 @@ function chart(data){
   
   for (key in data){
     d3.select(".chart")
-    // .append("p").text(key)
     .append("div")
       .style("width", function(d) { return (data[key]*7)+5.6 + "em"; })
       .text(function(d) { return key + ':   '+ data[key]; });
@@ -41,6 +40,15 @@ function dataCircles(data){
       .attr("cx", (i * 85)+30)
       .append("text").attr("text", data[i].name)
   }
+}
+
+function generateRadarChart(data){
+
+  var d = []
+  for (key in data){
+    d.push({axis: key, value: data[key]});
+  }
+  RadarChart.draw(".chart", [d]);
 }
 
 
