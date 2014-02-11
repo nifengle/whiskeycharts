@@ -1,6 +1,4 @@
 $(document).ready(function(){  
-  distilleryGroup = new DistilleryGroup;
-  attributeChart = new AttributeChart;
   initialize();
 })
 
@@ -12,9 +10,10 @@ function initialize(){
 
 function eventListener(){
   $('form').on("submit", function(e){
+    distilleryGroup = new DistilleryGroup;
+    attributeChart = new AttributeChart;
+    attributeChart.clearChart();
     e.preventDefault();
-    $('#svg').empty()
-    $('#loading').show()
     getFormOptions();
   })
 }
@@ -49,21 +48,28 @@ AttributeChart.prototype.drawChart = function(){
     legendOptions.push(distilleries[i])
     data.push(distilleryGroup[distilleries[i]].data);
   }
-  RadarChart.draw(".chart", data);
+  RadarChart.draw("#svg", data);
 }
 
+AttributeChart.prototype.loadingData = function(){
+  $('#loading').hide();
+}
+
+
+AttributeChart.prototype.clearChart = function(){
+  $('#svg').empty()
+  $('#loading').show()
+}
 
 function Distillery(name) {
   this.name = name;
 }
 
-
 Distillery.prototype.fetchData = function(name){
   var thisDistillery = this;
 
-  $.get( '/attributes', {distillery: name})
-  .done(function(data) {
-    $('#loading').hide();
+  $.get( '/attributes', {distillery: name}, function(data){
+    attributeChart.loadingData();
     thisDistillery.formatData(data.distillery);
     distilleryGroup[name] = thisDistillery;
     distilleryGroup.keys.push(name);
@@ -72,8 +78,6 @@ Distillery.prototype.fetchData = function(name){
   .fail(function(response){
     alert(response);
   }); 
-
-  
 }
 
 Distillery.prototype.formatData = function(data){
