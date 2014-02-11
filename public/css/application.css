@@ -1,38 +1,31 @@
 .container {
   margin: 20px auto;
-  width: 50em;
-  height: 40em;
-  padding: 0px 20px 20px 20px;
+  height: 60em;
+  width: 60em;
   border-width:5px;
   border-style:groove;
   border-color:#0772B5;
   background-color:#F0F9FF;
 }
 
-#choose_distillery{
-  padding: 0 5em;
+#header{
+  margin: 0 6em;
+}
+
+#loading{
+  width: 150px;
+  display: block;
+  margin: 10em auto;
+}
+
+#loading {
+  display: none;
+}
+
+#svg{
+  /*height: 600px;*/
+  /*width: 600px;*/
+  display: block;
   margin: 0 auto;
-}
-
-#choose_distillery label{
-  font-weight: bold;
-  margin-left: 2.5em;
-}
-
-#main_select, #compare_select{
-  display: inline-block;
-}
-
-#compare_select{
-  margin-left: 3em;
-}
-
-.chart div {
-  height: 1.7em;
-  font: 1.5em sans-serif;
-  background-color: red;
-  text-align: right;
-  padding: 3px;
-  margin: 1px;
-  color: white;
+  padding-bottom: 1em;
 }
