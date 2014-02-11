@@ -9,5 +9,7 @@ class CreateDistilleries < ActiveRecord::Migration
       t.integer :distillery_id, :latitude, :longitude
       t.string :postcode
     end
+
+    add_index(:distilleries, :name)
   end
 end

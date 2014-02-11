@@ -12,8 +12,9 @@ function initialize(){
 
 function eventListener(){
   $('form').on("submit", function(e){
+    attributeChart.clearChart();
     e.preventDefault();
-    $('#svg').empty()
+    
     $('#loading').show()
     getFormOptions();
   })
@@ -50,6 +51,10 @@ AttributeChart.prototype.drawChart = function(){
     data.push(distilleryGroup[distilleries[i]].data);
   }
   RadarChart.draw(".chart", data);
+}
+
+AttributeChart.prototype.clearChart = function(){
+  $('#svg').empty()
 }
 
 
