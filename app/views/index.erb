@@ -1,14 +1,17 @@
 <div class="container">
-  <form action="/attributes" method="post">
-    <select name="distillery_names">
-      <% @distilleries.each do |distillery| %>
-        <option><%= distillery.name %></option>
-      <% end %>
-    </select>
-  </form>
-  <div class="logo">
+  <div id="header">
+    <h2>Choose a distillery to view a map of its flavor profile.</h2>
   </div>
-  <div class="chart">
+  <div id="distillery_form">
+    <form>
+      <div id="choose_distillery">
+        <%= erb :distillery_list %>
+      </div>
+      <input type="submit" value="Go">
+    </form>
+  </div>
+  <div id="loading">
+    <img src="images/ajax-loader.gif">
   </div>
   <svg id="svg" class="chart">
   </svg>

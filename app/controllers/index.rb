@@ -6,13 +6,8 @@ get '/' do
   erb :index
 end
 
-get '/attributes/:attr' do
-  # quality = params[:attribute].downcase
-  # @distilleries = Distillery.where("#{quality} > ?", 2).order("#{quality} asc").map do |x|
-  #   {name: x.name, score: x[quality]}
-  p params
-  @distillery = Distillery.find_by_name(params[:attribute]).attributes.reject{|x| x=="name"||x=="id"}
-
+get '/attributes' do
+  @distillery = Distillery.find_by_name(params[:distillery]).attributes.reject{|x| x=="name"||x=="id"}
   content_type 'application/json'
-  { :distillery => @distillery }.to_json
+  halt 200, { :distillery => @distillery }.to_json
 end

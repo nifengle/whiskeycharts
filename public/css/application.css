@@ -1,46 +1,29 @@
 .container {
   margin: 20px auto;
-  width: 50em;
-  height: 40em;
-  padding: 0px 20px 20px 20px;
+  height: 1000px;
+  width: 1000px;
   border-width:5px;
   border-style:groove;
   border-color:#0772B5;
   background-color:#F0F9FF;
 }
 
-table {
-  margin: 3em auto;
-  font-size: 1.2em;
+#header{
+  margin: 0 6em;
 }
 
-thead {
-  cursor: pointer;
-  background: #c9dff0;
+#loading{
+  width: 150px;
+  display: block;
+  margin: 10em auto;
 }
 
-thead tr th span { 
-  background-repeat: no-repeat;
-  background-position: 100% 100%;
+#loading {
+  display: none;
 }
 
-tbody tr { 
-  color: #555;
-}
-tbody tr td {
-  text-align: center;
-  padding: 15px 10px;
-}
-tbody tr td.lalign {
-  text-align: left;
-}
-
-.chart div {
-  height: 1.7em;
-  font: 1.5em sans-serif;
-  background-color: steelblue;
-  text-align: right;
-  padding: 3px;
-  margin: 1px;
-  color: white;
+#svg{
+  width: 800px;
+  display: block;
+  margin: 0 auto;
 }

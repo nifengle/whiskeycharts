@@ -1,0 +1,6 @@
+<select class="chosen-select" multiple data-placeholder="Choose up to 3 Distilleries">
+  <% @distilleries.each do |distillery| %>
+      <option value="<%= distillery.name %>"><%= distillery.name %></option>
+  <% end %>
+</select>
+
