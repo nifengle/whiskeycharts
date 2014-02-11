@@ -13,6 +13,7 @@ function initialize(){
 function eventListener(){
   $('form').on("submit", function(e){
     e.preventDefault();
+    $('#svg').empty()
     $('#loading').show()
     getFormOptions();
   })

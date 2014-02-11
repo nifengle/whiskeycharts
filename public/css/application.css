@@ -1,7 +1,7 @@
 .container {
   margin: 20px auto;
-  height: 60em;
-  width: 60em;
+  height: 1000px;
+  width: 1000px;
   border-width:5px;
   border-style:groove;
   border-color:#0772B5;
@@ -23,9 +23,7 @@
 }
 
 #svg{
-  /*height: 600px;*/
-  /*width: 600px;*/
+  width: 800px;
   display: block;
   margin: 0 auto;
-  padding-bottom: 1em;
 }
