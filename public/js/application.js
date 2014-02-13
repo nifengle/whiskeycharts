@@ -1,5 +1,7 @@
 $(document).ready(function(){  
+  distilleryGroup = new DistilleryGroup
   initialize();
+  
 })
 
 function initialize(){
@@ -10,7 +12,6 @@ function initialize(){
 
 function eventListener(){
   $('form').on("submit", function(e){
-    distilleryGroup = new DistilleryGroup;
     attributeChart = new AttributeChart;
     attributeChart.clearChart();
     e.preventDefault();
@@ -22,8 +23,9 @@ function getFormOptions(){
   for(var i=0;i<$('.search-choice').length; i++){
     var name = $('.search-choice')[i].firstChild.innerHTML;
     var newDistillery = new Distillery(name)
-    newDistillery.fetchData(name);
+    distilleryGroup.distilleries.push(newDistillery)
   };
+  distilleryGroup.fetchData();
 }
 
 function selectStyling(){
@@ -34,7 +36,42 @@ function selectStyling(){
 }
 
 function DistilleryGroup(){
-  this.keys = [];
+  this.distilleries = []
+}
+
+DistilleryGroup.prototype.fetchData = function(){
+  var distilleries = this.distilleries
+  var needDataOn = []
+  for (var i=0;i<distilleries.length;i++){
+    var distilleryName = distilleries[i].name;
+    
+    if (!distilleries[i].smoky){
+      needDataOn.push(distilleryName);
+    }
+  }
+
+    $.get('/attributes', {distilleries: needDataOn}, function(data){
+      attributeChart.loadingData();
+      // distilleryGroup.buildGroupData(data);
+      console.log(data)
+
+    })
+  // $.get( '/attributes', {distilleries: needDataOn}, function(data){
+  //   attributeChart.loadingData();
+  //   thisDistillery.formatData(data.distillery);
+  //   distilleryGroup[name] = thisDistillery;
+  //   distilleryGroup.keys.push(name);fetchData
+  //   attributeChart.drawChart();
+  // })
+  // .fail(function(response){
+  //   alert(response);
+  // }); 
+}
+
+DistilleryGroup.prototype.buildGroupData = function(data){
+  for (var i = 0; i < this.distilleries; i++){
+    this.distilleries[i].formatData();
+  }
 }
 
 function AttributeChart(){
@@ -63,21 +100,6 @@ AttributeChart.prototype.clearChart = function(){
 
 function Distillery(name) {
   this.name = name;
-}
-
-Distillery.prototype.fetchData = function(name){
-  var thisDistillery = this;
-
-  $.get( '/attributes', {distillery: name}, function(data){
-    attributeChart.loadingData();
-    thisDistillery.formatData(data.distillery);
-    distilleryGroup[name] = thisDistillery;
-    distilleryGroup.keys.push(name);
-    attributeChart.drawChart();
-  })
-  .fail(function(response){
-    alert(response);
-  }); 
 }
 
 Distillery.prototype.formatData = function(data){
