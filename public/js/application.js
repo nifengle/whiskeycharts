@@ -1,5 +1,7 @@
 $(document).ready(function(){  
+  distilleryGroup = new DistilleryGroup()
   initialize();
+  
 })
 
 function initialize(){
@@ -10,7 +12,6 @@ function initialize(){
 
 function eventListener(){
   $('form').on("submit", function(e){
-    distilleryGroup = new DistilleryGroup;
     attributeChart = new AttributeChart;
     attributeChart.clearChart();
     e.preventDefault();
@@ -19,22 +20,51 @@ function eventListener(){
 }
 
 function getFormOptions(){
+  distilleryGroup.chartGroup = []
   for(var i=0;i<$('.search-choice').length; i++){
     var name = $('.search-choice')[i].firstChild.innerHTML;
-    var newDistillery = new Distillery(name)
-    newDistillery.fetchData(name);
+    if (!distilleryGroup.distilleries[name]){
+      var newDistillery = new Distillery();
+      distilleryGroup.distilleries[name] = newDistillery;
+    }
+    distilleryGroup.chartGroup[name] = distilleryGroup.distilleries[name]
   };
-}
-
-function selectStyling(){
-  $(".chosen-select").chosen({
-    max_selected_options: 3,
-    width: "15em",
-  });
+  distilleryGroup.fetchData();
 }
 
 function DistilleryGroup(){
-  this.keys = [];
+  this.distilleries = []
+}
+
+DistilleryGroup.prototype.fetchData = function(){
+  var distilleries = this.chartGroup
+  var needDataOn = []
+  
+  for (name in distilleries){
+    if (distilleries[name].attributes.length == 0){
+      needDataOn.push(name);
+    }
+  };
+  
+  console.log(needDataOn)
+  if (needDataOn.length > 0){
+    $.get('/attributes', {distilleries: needDataOn}, function(data){
+      attributeChart.loadingData();
+      distilleryGroup.buildGroupData(data);
+    });
+  }
+  else
+  {
+    attributeChart.loadingData();
+    distilleryGroup.buildGroupData(data);
+  }
+}
+
+DistilleryGroup.prototype.buildGroupData = function(data){
+  for (name in this.chartGroup){
+    this.chartGroup[name].formatData(data[name]);
+  }
+  attributeChart.drawChart();
 }
 
 function AttributeChart(){
@@ -43,10 +73,10 @@ function AttributeChart(){
 AttributeChart.prototype.drawChart = function(){
   data = []
   legendOptions = []
-  distilleries = distilleryGroup.keys
-  for (var i=0; i<distilleries.length ;i++){
-    legendOptions.push(distilleries[i])
-    data.push(distilleryGroup[distilleries[i]].data);
+  distilleries = distilleryGroup.chartGroup
+  for (name in distilleries){
+    legendOptions.push(name)
+    data.push(distilleryGroup.chartGroup[name].attributes);
   }
   RadarChart.draw("#svg", data);
 }
@@ -62,50 +92,38 @@ AttributeChart.prototype.clearChart = function(){
 }
 
 function Distillery(name) {
-  this.name = name;
-}
-
-Distillery.prototype.fetchData = function(name){
-  var thisDistillery = this;
-
-  $.get( '/attributes', {distillery: name}, function(data){
-    attributeChart.loadingData();
-    thisDistillery.formatData(data.distillery);
-    distilleryGroup[name] = thisDistillery;
-    distilleryGroup.keys.push(name);
-    attributeChart.drawChart();
-  })
-  .fail(function(response){
-    alert(response);
-  }); 
+  this.attributes = []
 }
 
 Distillery.prototype.formatData = function(data){
-  var formattedData = []
   for (key in data){
-    formattedData.push({axis: key, value: data[key]});
+    this.attributes.push( { axis: key, value: data[key] } );
   }
-  this.data = formattedData
 }
 
 
+function chart(data){
 
-
-// function chart(data){
-//   var data = data.distillery
-//   var x = d3.scale.linear()
-//     .domain([0, d3.max(data)])
-//     .range([0, 4]);
+  var x = d3.scale.linear()
+    .domain([0, d3.max(data)])
+    .range([0, 4]);
   
-
   
-//   for (key in data){
-//     d3.select(".chart")
-//     .append("div")
-//       .style("width", function(d) { return (data[key]*7)+5.6 + "em"; })
-//       .text(function(d) { return key + ':   '+ data[key]; });
-//   }
-// }
+  for (key in data){
+    d3.select(".chart")
+    .append("div")
+      .style("width", function() { return (data[key]*7) + "em"; })
+      .text(function() { return key + ':   '+ data[key]; });
+  }
+}
+
+function selectStyling(){
+  $(".chosen-select").chosen({
+    max_selected_options: 6,
+    width: "15em",
+    height: "2em",
+  });
+}
 
 // function dataCircles(data){
 //   var svg = d3.select("svg")

@@ -8,6 +8,12 @@
   background-color:#F0F9FF;
 }
 
+.chart div{
+  background-color: steelblue;
+  border: 1px solid white;
+  height: 1.5em;
+}
+
 #header{
   margin: 0 6em;
 }
