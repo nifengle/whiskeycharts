@@ -10,7 +10,7 @@ require 'rubygems'
 require 'bcrypt'
 require 'uri'
 require 'pathname'
-
+require 'rake'
 require 'pg'
 require 'active_record'
 require 'logger'
