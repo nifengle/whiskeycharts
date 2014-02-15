@@ -11,7 +11,7 @@ function initialize(){
 
 
 function eventListener(){
-  $('form').on("submit", function(e){
+  $('button').click(function(e){
     attributeChart = new AttributeChart;
     attributeChart.clearChart();
     e.preventDefault();
@@ -32,6 +32,25 @@ function getFormOptions(){
   distilleryGroup.fetchData();
 }
 
+function hoverHighlight(){
+  var len = $('h2').length
+  $('h2').each(function(index, h2){
+    $(h2).on('mouseover',function(){ 
+      $('.radar-chart-serie'+index).css('fill-opacity', '0.8');
+      
+      for (var i=0; i<len;i++){
+        if (i != index){
+          $('.radar-chart-serie'+i).css('fill-opacity', '0');
+        }
+      }
+    });
+
+    $(h2).on('mouseout', function(){
+      $('polygon').css('fill-opacity', '.3');
+    });
+  })
+}
+
 function DistilleryGroup(){
   this.distilleries = []
 }
@@ -46,7 +65,6 @@ DistilleryGroup.prototype.fetchData = function(){
     }
   };
   
-  console.log(needDataOn)
   if (needDataOn.length > 0){
     $.get('/attributes', {distilleries: needDataOn}, function(data){
       attributeChart.loadingData();
@@ -67,6 +85,10 @@ DistilleryGroup.prototype.buildGroupData = function(data){
   attributeChart.drawChart();
 }
 
+function appendSearchResult(name){
+  $('#search-results').append("<h2 id='"+name+"'>"+name+"</h2>")
+}
+
 function AttributeChart(){
 }
 
@@ -78,7 +100,11 @@ AttributeChart.prototype.drawChart = function(){
     legendOptions.push(name)
     data.push(distilleryGroup.chartGroup[name].attributes);
   }
+  for(var i=0;i<legendOptions.length;i++){
+    appendSearchResult(legendOptions[i]);
+  }
   RadarChart.draw("#svg", data);
+  hoverHighlight();
 }
 
 AttributeChart.prototype.loadingData = function(){
@@ -87,8 +113,9 @@ AttributeChart.prototype.loadingData = function(){
 
 
 AttributeChart.prototype.clearChart = function(){
-  $('#svg').empty()
-  $('#loading').show()
+  $('#svg').empty();
+  $('#search-results').empty();
+  $('#loading').show();
 }
 
 function Distillery(name) {
@@ -101,13 +128,21 @@ Distillery.prototype.formatData = function(data){
   }
 }
 
+function selectStyling(){
+  $(".chzn-select").chosen({
+    max_selected_options: 6,
+    width: "15em",
+    height: "2em"
+  });
+}
 
+
+//BAR CHART//
 function chart(data){
 
   var x = d3.scale.linear()
     .domain([0, d3.max(data)])
     .range([0, 4]);
-  
   
   for (key in data){
     d3.select(".chart")
@@ -116,25 +151,3 @@ function chart(data){
       .text(function() { return key + ':   '+ data[key]; });
   }
 }
-
-function selectStyling(){
-  $(".chosen-select").chosen({
-    max_selected_options: 6,
-    width: "15em",
-    height: "2em",
-  });
-}
-
-// function dataCircles(data){
-//   var svg = d3.select("svg")
-//   var data = data.distillery
-
-//   for(var i=0;i<data.length;i++){
-//     svg.append("circle")
-//       .style("fill", "steelblue")
-//       .attr("r", data[i].score*10)
-//       .attr("cy", 100)
-//       .attr("cx", (i * 85)+30)
-//       .append("text").attr("text", data[i].name)
-//   }
-// }

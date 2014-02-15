@@ -1,20 +1,24 @@
 <div class="container">
-  <div id="header">
-    <h2>Choose a distillery to view a map of its flavor profile.</h2>
-  </div>
-  <div id="distillery_form">
-    <form>
-      <div id="choose_distillery">
-        <%= erb :distillery_list %>
+  <div class="row">
+    <h1>Whiskey Stats</h1>
+  </div> <!--end row -->
+  <div class="row" id="first-row">
+    <div class="col-md-2">
+      <%= erb :distillery_list %>
+    </div><!--end col -->
+    <div class="col-md-2">
+      <button type="button" class="btn btn-info" id="go">Go!</button>
+    </div><!--end col -->
+  </div><!--end row -->
+  <div class="row">
+    <div class="col-md-4" id="search-results">
+    </div>
+    <div class="col-md-4">
+      <div id="loading">
+        <img src="images/ajax-loader.gif">
       </div>
-      <input type="submit" value="Go">
-    </form>
+      <svg id="svg">
+      </svg>
+    </div>
   </div>
-  <div id="loading">
-    <img src="images/ajax-loader.gif">
-  </div>
-  <div class="chart">
-  </div>
-<svg id="svg">
-  </svg>
 </div>
