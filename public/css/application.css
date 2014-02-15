@@ -1,21 +1,9 @@
-.container {
-  margin: 20px auto;
-  height: 900px;
-  width: 900px;
-  border-width:5px;
-  border-style:groove;
-  border-color:#0772B5;
-  background-color:#F0F9FF;
+#first-row{
+  margin-top: 2em;
 }
 
-.chart div{
-  background-color: steelblue;
-  border: 1px solid white;
-  height: 1.5em;
-}
-
-#header{
-  margin: 0 6em;
+#go{
+  margin-left: 1em;
 }
 
 #loading{

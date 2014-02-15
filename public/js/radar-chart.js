@@ -2,14 +2,14 @@ var RadarChart = {
   draw: function(id, d, options){
   var cfg = {
    radius: 2,
-   w: 400,
-   h: 400,
+   w: 350,
+   h: 350,
    factor: .9,
    factorLegend: .7,
    levels: 4,
    maxValue: 4,
    radians: 2 * Math.PI,
-   opacityArea: 0.5,
+   opacityArea: 0.3,
    ToRight: 5,
    TranslateX: 80,
    TranslateY: 30,
@@ -70,7 +70,7 @@ var RadarChart = {
      .attr("x", function(d){return levelFactor*(1-cfg.factor*Math.sin(0));})
      .attr("y", function(d){return levelFactor*(1-cfg.factor*Math.cos(0));})
      .attr("class", "legend")
-     .style("font-family", "sans-serif")
+     .style("font-family", "'Helvetica Neue', Helvetica, Arial, sans-serif")
      .style("font-size", "0.8em")
      .attr("transform", "translate(" + (cfg.w/2-levelFactor + cfg.ToRight) + ", " + (cfg.h/2-levelFactor) + ")")
      .attr("fill", "#737373")
@@ -97,7 +97,7 @@ var RadarChart = {
   axis.append("text")
     .attr("class", "legend")
     .text(function(d){return d})
-    .style("font-family", "sans-serif")
+    .style("font-family", "'Helvetica Neue', Helvetica, Arial, sans-serif")
     .style("font-size", "1em")
     .attr("text-anchor", "middle")
     .attr("dy", "1.5em")
@@ -205,7 +205,7 @@ var RadarChart = {
   //Tooltip
   tooltip = g.append('text')
          .style('opacity', 0)
-         .style('font-family', 'sans-serif')
+         .style('font-family', "'Helvetica Neue', Helvetica, Arial, sans-serif")
          .style('font-size', '13px');
   }
 };
