@@ -20,6 +20,10 @@ gem 'shotgun'
 gem 'sinatra-flash'
 gem 'debugger'
 gem 'bcrypt-ruby'
+  gem 'rspec'
+  gem 'factory_girl'
+  gem 'faker'
+  gem 'pry'
 
 group :test do
   gem 'shoulda-matchers'
