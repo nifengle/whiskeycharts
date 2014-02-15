@@ -33,6 +33,11 @@ function getFormOptions(){
 }
 
 function hoverHighlight(){
+  polygonHighlight();
+  sidebarHighlight(); 
+}
+
+function polygonHighlight(){
   var len = $('h2').length
   $('h2').each(function(index, h2){
     $(h2).on('mouseover',function(){ 
@@ -49,7 +54,9 @@ function hoverHighlight(){
       $('polygon').css('fill-opacity', '.3');
     });
   })
+}
 
+function sidebarHighlight(){
   $('polygon').each(function(index, polygon){
     var colorScale = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"]
     
@@ -61,7 +68,6 @@ function hoverHighlight(){
       $($('h2')[index]).css('color', 'inherit');
     });
   })
-  
 }
 
 function DistilleryGroup(){
