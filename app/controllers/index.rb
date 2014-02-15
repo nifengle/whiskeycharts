@@ -7,10 +7,11 @@ get '/' do
 end
 
 get '/attributes' do 
-  @distilleries = Distillery.where(name: params[:distilleries]).map do |distillery| 
-    distillery.attributes.reject{|attribute| attribute == "id"}
+  @distilleries = {}
+  Distillery.where(name: params[:distilleries]).map do |distillery| 
+    @distilleries[distillery.name] = distillery.attributes.reject{|attribute| attribute == "id" || attribute == "name"}
   end
-
+  p @distilleries
   content_type 'application/json'
-  halt 200, { :distillery => @distilleries }.to_json
+  halt 200, @distilleries.to_json
 end

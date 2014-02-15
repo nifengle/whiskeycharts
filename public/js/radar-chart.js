@@ -1,11 +1,11 @@
 var RadarChart = {
   draw: function(id, d, options){
   var cfg = {
-   radius: 3,
-   w: 500,
-   h: 500,
+   radius: 2,
+   w: 400,
+   h: 400,
    factor: .9,
-   factorLegend: .80,
+   factorLegend: .7,
    levels: 4,
    maxValue: 4,
    radians: 2 * Math.PI,
@@ -71,7 +71,7 @@ var RadarChart = {
      .attr("y", function(d){return levelFactor*(1-cfg.factor*Math.cos(0));})
      .attr("class", "legend")
      .style("font-family", "sans-serif")
-     .style("font-size", "10px")
+     .style("font-size", "0.8em")
      .attr("transform", "translate(" + (cfg.w/2-levelFactor + cfg.ToRight) + ", " + (cfg.h/2-levelFactor) + ")")
      .attr("fill", "#737373")
      .text(Format((j+1)*cfg.maxValue/cfg.levels));
@@ -98,7 +98,7 @@ var RadarChart = {
     .attr("class", "legend")
     .text(function(d){return d})
     .style("font-family", "sans-serif")
-    .style("font-size", "11px")
+    .style("font-size", "1em")
     .attr("text-anchor", "middle")
     .attr("dy", "1.5em")
     .attr("transform", function(d, i){return "translate(0, -10)"})
