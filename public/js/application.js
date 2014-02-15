@@ -49,6 +49,19 @@ function hoverHighlight(){
       $('polygon').css('fill-opacity', '.3');
     });
   })
+
+  $('polygon').each(function(index, polygon){
+    var colorScale = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"]
+    
+    $(polygon).on('mouseover', function(){
+      $($('h2')[index]).css('color', colorScale[index]);
+    });
+
+    $(polygon).on('mouseout', function(){
+      $($('h2')[index]).css('color', 'inherit');
+    });
+  })
+  
 }
 
 function DistilleryGroup(){
